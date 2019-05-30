@@ -19,7 +19,7 @@ public class Region {
     @SequenceGenerator(name = "regions_id_gen",sequenceName = "regions_id_seq",allocationSize = 1)
     private long id;
 
-    @Column(name = "counrty_name")
+    @Column(name = "country_name")
     private String countryName;
 
     @Column(name = "server_name")
