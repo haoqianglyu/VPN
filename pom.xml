@@ -2,10 +2,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.haoqiang.vpn</groupId>
-    <artifactId>vpn</artifactId>
+    <artifactId>lyu-vpn</artifactId>
     <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>vpn</name>
+    <name>lyu-vpn</name>
+
+    <properties>
+        <spring.version>5.0.6.RELEASE</spring.version>
+        <hibernate.version>5.3.1.Final</hibernate.version>
+        <flyway.version>5.2.4</flyway.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -13,7 +19,127 @@
             <artifactId>guava</artifactId>
             <version>26.0-jre</version>
         </dependency>
+
+        <!--annotation-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!--JDBC-->
+        <dependency>
+            <groupId>net.postgis</groupId>
+            <artifactId>postgis-jdbc</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+        <!--hibernate-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-java8</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>cglib</groupId>
+                    <artifactId>cglib</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>dom4j</groupId>
+                    <artifactId>dom4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-spatial</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.0.Final</version>
+        </dependency>
+
+
+
     </dependencies>
+
+
+    <build>
+
+        <plugins>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
+                <configuration>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>jdbc:postgresql://localhost:5430/VPN</url>
+                    <user>admin</user>
+                    <password>password</password>
+                    <locations>
+                        <location>db/migration</location>
+                    </locations>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
 
 
 </project>
