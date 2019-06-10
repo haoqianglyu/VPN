@@ -2,6 +2,8 @@ package com.haoqiang.vpn.domain;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 import static javax.persistence.GenerationType.SEQUENCE;
 
 /**
@@ -22,9 +24,27 @@ public class Region {
     @Column(name = "country_name")
     private String countryName;
 
-    @Column(name = "server_name")
-    private String serverName;
+//    @Column(name = "flag")
+//    private String flag;
 
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "region")
+    private List<Server> servers;
+
+    public List<Server> getServers() {
+        return servers;
+    }
+
+    public void setServers(List<Server> servers) {
+        this.servers = servers;
+    }
+
+//    public String getFlag() {
+//        return flag;
+//    }
+//
+//    public void setFlag(String flag) {
+//        this.flag = flag;
+//    }
 
     public String getCountryName() {
         return countryName;
@@ -34,11 +54,4 @@ public class Region {
         this.countryName = countryName;
     }
 
-    public String getServerName() {
-        return serverName;
-    }
-
-    public void setServerName(String serverName) {
-        this.serverName = serverName;
-    }
 }
