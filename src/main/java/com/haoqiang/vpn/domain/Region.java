@@ -46,6 +46,10 @@ public class Region {
 //        this.flag = flag;
 //    }
 
+    public long getId() {
+        return id;
+    }
+
     public String getCountryName() {
         return countryName;
     }

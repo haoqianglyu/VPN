@@ -23,6 +23,10 @@ public class Server {
     @JoinColumn( name = "region_id")
     private Region region;
 
+    public Long getId() {
+        return id;
+    }
+
     public Region getRegion() {
         return region;
     }

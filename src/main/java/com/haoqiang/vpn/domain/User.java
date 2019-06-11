@@ -30,6 +30,10 @@ public class User {
     @Column(name = "first_name")
     private String firstName;
 
+    public Long getId() {
+        return id;
+    }
+
     @Column(name = "username")
     private String userName;
 
