@@ -1,7 +1,10 @@
 package com.haoqiang.vpn.service;
 
 import com.haoqiang.vpn.domain.User;
+import com.haoqiang.vpn.repository.CRUDDao;
+import com.haoqiang.vpn.repository.CRUDDaoImpl;
 import com.haoqiang.vpn.repository.UserDao;
+import com.haoqiang.vpn.repository.UserDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +21,7 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    private UserDao userDao;
+    private UserDaoImpl userDao;
 
 
     public User save(User user){
@@ -27,7 +30,7 @@ public class UserService {
     }
 
     public List<User> saveUsers(List<User> users){
-        return userDao.saveUsers(users);
+        return userDao.saveAll(users);
     }
 
     public List<User> findAll(){

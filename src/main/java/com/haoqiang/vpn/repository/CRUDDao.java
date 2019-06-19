@@ -11,6 +11,8 @@ public interface CRUDDao<T,ID> {
 
     T save(T t);
 
+    List<T> saveAll(List<T> t);
+
     List<T> findAll();
 
     T findById(ID id);

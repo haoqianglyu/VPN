@@ -9,17 +9,17 @@ import java.util.List;
  * @date 2019-06-05 23:36
  */
 
-public interface UserDao {
+public interface UserDao{
 
-    User save(User user);
-
-    List<User> saveUsers(List<User> users);
-
-    List<User> findAll();
+//    User save(User user);
+//
+//    List<User> saveUsers(List<User> users);
+//
+//    List<User> findAll();
 
     User findByIdEager(Long id);
 
-    User findById(Long id);
+//    User findById(Long id);
 
     List<User> findByUsernameIgnoreCase(String username);
 }

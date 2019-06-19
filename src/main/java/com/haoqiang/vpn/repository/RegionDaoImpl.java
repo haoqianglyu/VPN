@@ -24,7 +24,7 @@ import java.util.List;
 //T = region, ID = Long
 @Repository
 @Transactional
-public class RegionDaoImpl implements CRUDDao<Region,Long>,RegionDao{
+public class RegionDaoImpl implements RegionDao{
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
