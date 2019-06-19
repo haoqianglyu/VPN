@@ -6,25 +6,34 @@ import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@EnableTransactionManagement
 public class DataSourceInitializer {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected String databaseUrl = "jdbc:postgresql://localhost:5430/VPN";
+    @Value("${database.serverName}")
+    protected String databaseUrl;
+    //"jdbc:postgresql://localhost:5430/VPN"
 
-    protected String databaseUserName = "admin";
+    @Value("${database.username}")
+    protected String databaseUserName;
+    //"admin"
 
-    protected String databasePassword = "password";
+    @Value("${database.password}")
+    protected String databasePassword ;
+    //"password"
 
     protected String driverClassName="org.postgresql.ds.PGSimpleDataSource";
 
@@ -48,6 +57,10 @@ public class DataSourceInitializer {
     @Bean(name = "dataSource")
     public DataSource getDataSource(){
         logger.debug("generating datasource bean");
+        logger.debug("database url:"+databaseUrl);
+        logger.debug("databaseUserName:"+databaseUserName);
+        logger.debug("databasePassword:"+databasePassword);
+
         DataSource dataSource = createDataSource();
         return dataSource;
     }

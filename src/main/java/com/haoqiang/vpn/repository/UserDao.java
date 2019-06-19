@@ -13,9 +13,13 @@ public interface UserDao {
 
     User save(User user);
 
+    List<User> saveUsers(List<User> users);
+
     List<User> findAll();
 
     User findByIdEager(Long id);
 
     User findById(Long id);
+
+    List<User> findByUsernameIgnoreCase(String username);
 }

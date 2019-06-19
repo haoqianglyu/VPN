@@ -3,8 +3,13 @@ package com.haoqiang.vpn.repository;
 import com.haoqiang.vpn.domain.Region;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -18,22 +23,34 @@ import java.util.List;
 
 //T = region, ID = Long
 @Repository
+@Transactional
 public class RegionDaoImpl implements CRUDDao<Region,Long>,RegionDao{
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private SessionFactory sessionFactory;
 
 
     @Override
-    @Transactional(readOnly = true)
     public Region save(Region region) {
+        logger.debug("saving region instance");
         Session session = sessionFactory.getCurrentSession();
-        session.save(region);
+        //Transaction tran=session.beginTransaction();
+        try{
+            session.save(region);
+            //tran.commit();
+            logger.debug("save successfully!");
+        }catch (RuntimeException re) {
+            logger.error("save failed", re);
+            throw re;
+        }
+        //session.flush();
+        //session.close();
         return region;
     }
 
     @Override
-    @Transactional
     public List<Region> findAll() {
         String hql = "FROM Region";
         Session s = sessionFactory.getCurrentSession();

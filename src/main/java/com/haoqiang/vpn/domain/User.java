@@ -2,13 +2,12 @@ package com.haoqiang.vpn.domain;
 
 
 import javax.persistence.*;
+import static javax.persistence.GenerationType.SEQUENCE;
 
 /**
  * @author Haoqiang Lyu
  * @date 2019-05-29 11:03
  */
-
-import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Table(name="users")

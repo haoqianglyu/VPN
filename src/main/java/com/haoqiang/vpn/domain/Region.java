@@ -3,6 +3,7 @@ package com.haoqiang.vpn.domain;
 import javax.persistence.*;
 
 import java.util.List;
+import java.util.Objects;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -58,4 +59,27 @@ public class Region {
         this.countryName = countryName;
     }
 
+    @Override
+    public String toString() {
+        return "Region{" +
+                "id=" + id +
+                ", countryName='" + countryName + '\'' +
+                //", servers=" + servers +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Region region = (Region) o;
+        return id == region.id ;
+                //&& Objects.equals(countryName, region.countryName);
+                //&& Objects.equals(servers, region.servers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, countryName, servers);
+    }
 }

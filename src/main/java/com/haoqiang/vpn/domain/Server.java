@@ -2,6 +2,8 @@ package com.haoqiang.vpn.domain;
 
 import javax.persistence.*;
 
+import java.util.Objects;
+
 import static javax.persistence.GenerationType.SEQUENCE;
 
 /**
@@ -34,5 +36,19 @@ public class Server {
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Server server = (Server) o;
+        return Objects.equals(id, server.id);
+        //&& Objects.equals(region, server.region);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, region);
     }
 }
