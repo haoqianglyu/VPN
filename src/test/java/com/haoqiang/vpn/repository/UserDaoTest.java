@@ -2,8 +2,11 @@ package com.haoqiang.vpn.repository;
 
 import com.haoqiang.vpn.config.AppConfig;
 import com.haoqiang.vpn.domain.User;
+import com.haoqiang.vpn.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,8 +33,11 @@ import static junit.framework.TestCase.*;
 @WebAppConfiguration
 @Transactional //after doing unit test, roll back
 public class UserDaoTest {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
 
     @Test
     public void findByIdTest(){
@@ -40,8 +46,8 @@ public class UserDaoTest {
         expectedResult.setFirstName("haoqiang");
         expectedResult.setLastName("lyu");
         expectedResult.setUserName("Ares");
-        userDao.save(expectedResult);
-        User actualResult = userDao.findById(expectedResult.getId());
+        userService.save(expectedResult);
+        User actualResult = userService.findById(expectedResult.getId());
         assertNotNull(expectedResult.getId());
         assertEquals(actualResult,expectedResult);
     }
@@ -54,11 +60,11 @@ public class UserDaoTest {
         expectedResult.get(0).setFirstName("haoqiang");
         expectedResult.get(0).setLastName("lyu");
         expectedResult.get(0).setUserName("Ares");
-        System.out.println("---------->expectedResult:"+expectedResult);
-        userDao.saveUsers(expectedResult);
-        List<User> actualResult = userDao.findByUsernameIgnoreCase(expectedResult.get(0).getUserName());
-        System.out.println("---------->expectedResult:"+expectedResult);
-        System.out.println("---------->actualResult:"+actualResult);
+        logger.debug("---------->expectedResult:"+expectedResult);
+        userService.saveUsers(expectedResult);
+        List<User> actualResult = userService.findByUsernameIgnoreCase(expectedResult.get(0).getUserName());
+        logger.debug("---------->expectedResult:"+expectedResult);
+        logger.debug("---------->actualResult:"+actualResult);
         assertEquals(actualResult,expectedResult);
     }
 
