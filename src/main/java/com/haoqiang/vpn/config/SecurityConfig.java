@@ -43,13 +43,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
+//    protected void configure(HttpSecurity http) throws Exception{
+//        http.csrf().disable().authorizeRequests().antMatchers("/api/users","/api/user").permitAll()
+//                .and()
+//                    .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTER_USER","ADMIN")
+//                .and()
+//                .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
+//        //                                                    =new RestAuthenticationEntryPoint()
+//
+//    }
+
     protected void configure(HttpSecurity http) throws Exception{
-        http.csrf().disable().authorizeRequests().antMatchers("/api/users","/api/user").permitAll()
-                .and()
-                    .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTER_USER","ADMIN")
-                .and()
-                .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
-        //                                                    =new RestAuthenticationEntryPoint()
+        http.csrf().disable().authorizeRequests().antMatchers("/api/users","/api/user","/api/**").permitAll();
+
 
     }
 
