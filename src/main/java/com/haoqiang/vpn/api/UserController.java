@@ -2,6 +2,8 @@ package com.haoqiang.vpn.api;
 
 import com.haoqiang.vpn.domain.User;
 import com.haoqiang.vpn.repository.UserDao;
+import com.haoqiang.vpn.repository.UserDaoImpl;
+import com.haoqiang.vpn.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +25,13 @@ public class UserController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
 
     // /api/users Get
     @RequestMapping(method = RequestMethod.GET)
     public List getUserList(){
         logger.debug("list users");
-//        return null;
-        return userDao.findAll();
+        return userService.findAll();
     }
 
     // /api/users/5/paystub/10/row/1   Get      /object/object_id
@@ -38,20 +39,20 @@ public class UserController {
     public User getUserById(@PathVariable("Id") Long Id){
         logger.debug("find users id:"+Id);
 
-        return userDao.findById(Id);
+        return userService.findById(Id);
     }
 
     // /api/users Post
     @RequestMapping(value = "", method = RequestMethod.POST)
     public User addUser(@RequestBody User u){
-        return userDao.save(u);
+        return userService.save(u);
     }
 
     // /api/users?username=ares Post
     @RequestMapping(value = "", method = RequestMethod.GET,params = "username")
     public List<User> getUserByUsername(@RequestParam("username") String username){
         logger.debug("find users by username:"+username);
-        return userDao.findByUsernameIgnoreCase(username);
+        return userService.findByUsernameIgnoreCase(username);
 
     }
 }

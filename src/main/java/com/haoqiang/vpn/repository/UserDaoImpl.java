@@ -1,7 +1,6 @@
 package com.haoqiang.vpn.repository;
 
 import com.haoqiang.vpn.domain.User;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -39,5 +38,11 @@ public class UserDaoImpl extends CRUDDaoImpl<User,Long> implements UserDao{
             return query.getResultList();
         }
 
+    }
+
+    @Override
+    @Autowired
+    public void setHQLEntityClazz() {
+        this.hQLEntityClazz = User.class;
     }
 }

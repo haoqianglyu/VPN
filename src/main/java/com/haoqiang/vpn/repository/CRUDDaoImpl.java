@@ -1,6 +1,4 @@
 package com.haoqiang.vpn.repository;
-
-import com.haoqiang.vpn.domain.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
@@ -18,7 +17,10 @@ import java.util.List;
 @Repository // new CRUDDaoImpl()
 @Transactional
 //T=B, ID=IB
-public class CRUDDaoImpl<B,IB> implements CRUDDao<B,IB>{
+public abstract class CRUDDaoImpl<B,IB> implements CRUDDao<B,IB>{
+    protected Class<B> hQLEntityClazz;
+
+    public abstract void setHQLEntityClazz();
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -40,7 +42,7 @@ public class CRUDDaoImpl<B,IB> implements CRUDDao<B,IB>{
 
     @Override
     public List<B> findAll() {
-        String hql = "FROM B";
+        String hql = "FROM "+hQLEntityClazz.getName();
         Session s = sessionFactory.getCurrentSession();
         TypedQuery<B> query = s.createQuery(hql);
         return query.getResultList();
@@ -48,7 +50,8 @@ public class CRUDDaoImpl<B,IB> implements CRUDDao<B,IB>{
 
     @Override
     public B findById(IB ib) {
-        String hql = "FROM B b where u.ib = :iibb";
+//        if (hQLEntityClazz == null) System.out.println("***null***");
+        String hql = "FROM "+hQLEntityClazz.getName() +" b where b.id = :iibb";
         TypedQuery<B> query = sessionFactory.getCurrentSession().createQuery(hql).setParameter("iibb",ib);
         return query.getSingleResult();
     }
