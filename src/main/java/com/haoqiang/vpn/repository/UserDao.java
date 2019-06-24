@@ -22,5 +22,6 @@ public interface UserDao{
 //    User findById(Long id);
 
     List<User> findByUsernameIgnoreCase(String username);
-    User findByUsername(String username);
+    User findByEmailIgnoreCase(String email);
+    User findByUsernameIgnoreC(String username);
 }

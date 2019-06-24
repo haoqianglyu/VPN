@@ -5,6 +5,7 @@ import com.haoqiang.vpn.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,9 +28,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String emailorUsername) throws UsernameNotFoundException {
         User domainUser = null;
         try {
-            domainUser = userService.findByUsername(emailorUsername);
+            domainUser = userService.findByEmailorUsername(emailorUsername);
         } catch (Exception repositoryProblem) {
-            logger.debug("catch Authen");
+            logger.debug("catch AuthenticationServiceException from Authentication Provider");
+        }
+        if(domainUser == null){
+            throw new BadCredentialsException("AbstractUserDetailsAuthenticationProvider.UsernameNotFound");
         }
         return domainUser;
     }

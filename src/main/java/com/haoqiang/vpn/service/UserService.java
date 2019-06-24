@@ -5,6 +5,7 @@ import com.haoqiang.vpn.repository.CRUDDao;
 import com.haoqiang.vpn.repository.CRUDDaoImpl;
 import com.haoqiang.vpn.repository.UserDao;
 import com.haoqiang.vpn.repository.UserDaoImpl;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,8 +48,18 @@ public class UserService {
         return users;
     }
 
-    public User findByUsername(String username){
-        User user = userDao.findByUsername(username);
+
+    public User findByEmailorUsername(String keyword) throws NotFoundException,NullPointerException {
+        if (keyword == null || "".equals(keyword.trim())){
+            throw new NullPointerException("search keyword is null");
+        }
+        User user = userDao.findByEmailIgnoreCase(keyword);
+        if(user == null){
+            user = userDao.findByUsernameIgnoreC(keyword);
+        }
+        if(user == null){
+            throw new NotFoundException("not found");
+        }
         return user;
     }
 
