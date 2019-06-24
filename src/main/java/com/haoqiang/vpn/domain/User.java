@@ -48,8 +48,17 @@ public class User implements UserDetails {
     @Column(name = "username")
     private String userName;
 
+    //default false
     @Column(name = "expired")
     private Boolean expired;
+
+    //default false
+    @Column(name = "locked")
+    private Boolean locked;
+
+    //default true
+    @Column(name = "enable")
+    private Boolean enable;
 
     public String getUserName() {
         return userName;
@@ -106,7 +115,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !locked;
     }
 
     @Override
@@ -116,6 +125,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enable;
     }
 }
