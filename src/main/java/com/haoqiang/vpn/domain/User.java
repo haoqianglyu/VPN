@@ -27,6 +27,13 @@ public class User implements UserDetails {
     @Column
     private String email;
 
+    @Column
+    private String password;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Column(name = "last_name")
 
     private String lastName;
@@ -40,6 +47,9 @@ public class User implements UserDetails {
 
     @Column(name = "username")
     private String userName;
+
+    @Column(name = "expired")
+    private Boolean expired;
 
     public String getUserName() {
         return userName;
@@ -81,7 +91,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return userName;
+        return password;
     }
 
     @Override
@@ -91,7 +101,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return !expired;
     }
 
     @Override
