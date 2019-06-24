@@ -41,6 +41,13 @@ public class UserDaoImpl extends CRUDDaoImpl<User,Long> implements UserDao{
     }
 
     @Override
+    public User findByUsername(String username) {
+        String hql = "FROM User u where u.userName = :username2";
+        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(hql).setParameter("username2",username);
+        return query.getSingleResult();
+    }
+
+    @Override
     @Autowired
     public void setHQLEntityClazz() {
         this.hQLEntityClazz = User.class;

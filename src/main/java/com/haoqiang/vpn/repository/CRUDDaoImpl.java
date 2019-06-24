@@ -50,7 +50,6 @@ public abstract class CRUDDaoImpl<B,IB> implements CRUDDao<B,IB>{
 
     @Override
     public B findById(IB ib) {
-//        if (hQLEntityClazz == null) System.out.println("***null***");
         String hql = "FROM "+hQLEntityClazz.getName() +" b where b.id = :iibb";
         TypedQuery<B> query = sessionFactory.getCurrentSession().createQuery(hql).setParameter("iibb",ib);
         return query.getSingleResult();

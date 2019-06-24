@@ -7,6 +7,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * @author Haoqiang Lyu
@@ -36,27 +39,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
 
     //step2:
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-        auth.inMemoryAuthentication().withUser("user")
-                .password("{noop}password").roles("ADMIN");
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+//        auth.inMemoryAuthentication().withUser("user")
+//                .password("{noop}password").roles("ADMIN");
+//    }
+
+
+    protected void configure(HttpSecurity http) throws Exception{
+        http.csrf().disable().authorizeRequests().antMatchers("/api/users","/api/user").permitAll()
+                .and()
+                    .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTER_USER","ADMIN")
+                .and()
+                .formLogin();
+        //        .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
+        //                                                    =new RestAuthenticationEntryPoint()
+
     }
 
-
 //    protected void configure(HttpSecurity http) throws Exception{
-//        http.csrf().disable().authorizeRequests().antMatchers("/api/users","/api/user").permitAll()
-//                .and()
-//                    .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTER_USER","ADMIN")
-//                .and()
-//                .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
-//        //                                                    =new RestAuthenticationEntryPoint()
+//        http.csrf().disable().authorizeRequests().antMatchers("/api/users","/api/user","/api/**").permitAll();
+//
 //
 //    }
 
-    protected void configure(HttpSecurity http) throws Exception{
-        http.csrf().disable().authorizeRequests().antMatchers("/api/users","/api/user","/api/**").permitAll();
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
     }
 
 }

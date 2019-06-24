@@ -47,6 +47,11 @@ public class UserService {
         return users;
     }
 
+    public User findByUsername(String username){
+        User user = userDao.findByUsername(username);
+        return user;
+    }
+
 
 
 }

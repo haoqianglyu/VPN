@@ -22,4 +22,5 @@ public interface UserDao{
 //    User findById(Long id);
 
     List<User> findByUsernameIgnoreCase(String username);
+    User findByUsername(String username);
 }
