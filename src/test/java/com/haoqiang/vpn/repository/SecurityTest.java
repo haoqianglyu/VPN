@@ -54,7 +54,9 @@ public class SecurityTest {
 
         UserDetails actualResult_email = userDetailsServiceImpl.loadUserByUsername(expectedResult.getEmail());
         UserDetails actualResult_username = userDetailsServiceImpl.loadUserByUsername(expectedResult.getUsername());
-
+//        logger.debug("----->1"+actualResult_email);
+//        logger.debug("----->2"+actualResult_username);
+//        logger.debug("----->3"+userDetailsServiceImpl.loadUserByUsername(expectedResult.getEmail()));
         assertEquals(actualResult_email,expectedResult);
         assertEquals(actualResult_username,expectedResult);
     }
