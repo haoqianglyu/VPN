@@ -7,12 +7,10 @@ import org.springframework.stereotype.Service;
  * @date 2019-06-25 10:32
  */
 
-@Service
 public class NotFoundException extends Exception {
     public NotFoundException(String msg) {
         super(msg);
     }
-
     public NotFoundException() {
         super();
     }
