@@ -2,6 +2,7 @@ package com.haoqiang.vpn.repository;
 
 import com.haoqiang.vpn.domain.User;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,8 +44,8 @@ public class UserDaoImpl extends CRUDDaoImpl<User,Long> implements UserDao{
     @Override
     public User findByEmailIgnoreCase(String email) {
         String hql = "FROM User u where lower(u.email) = :email2";
-        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(hql).setParameter("email2",email.toLowerCase());
-        return query.getSingleResult();
+        Query<User> query = sessionFactory.getCurrentSession().createQuery(hql).setParameter("email2",email.toLowerCase());
+        return query.uniqueResult();
     }
 
     @Override

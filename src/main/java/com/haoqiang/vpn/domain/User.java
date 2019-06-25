@@ -46,7 +46,7 @@ public class User implements UserDetails {
     }
 
     @Column(name = "username")
-    private String userName;
+    private String username;
 
     //default false
     @Column(name = "expired")
@@ -60,12 +60,8 @@ public class User implements UserDetails {
     @Column(name = "enable")
     private Boolean enable;
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public String getEmail() {
@@ -105,7 +101,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     @Override

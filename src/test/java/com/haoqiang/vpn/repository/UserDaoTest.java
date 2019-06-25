@@ -3,6 +3,7 @@ package com.haoqiang.vpn.repository;
 import com.haoqiang.vpn.config.AppConfig;
 import com.haoqiang.vpn.domain.User;
 import com.haoqiang.vpn.service.UserService;
+import javassist.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -45,7 +46,7 @@ public class UserDaoTest {
         expectedResult.setEmail("haoqianglyu@gmail.com");
         expectedResult.setFirstName("haoqiang");
         expectedResult.setLastName("lyu");
-        expectedResult.setUserName("Ares");
+        expectedResult.setUsername("Ares");
         userService.save(expectedResult);
         User actualResult = userService.findById(expectedResult.getId());
         assertNotNull(expectedResult.getId());
@@ -59,13 +60,27 @@ public class UserDaoTest {
         expectedResult.get(0).setEmail("haoqianglyu@gmail.com");
         expectedResult.get(0).setFirstName("haoqiang");
         expectedResult.get(0).setLastName("lyu");
-        expectedResult.get(0).setUserName("Ares");
+        expectedResult.get(0).setUsername("Ares");
         logger.debug("---------->expectedResult:"+expectedResult);
         userService.saveUsers(expectedResult);
-        List<User> actualResult = userService.findByUsernameIgnoreCase(expectedResult.get(0).getUserName());
+        List<User> actualResult = userService.findByUsernameIgnoreCase(expectedResult.get(0).getUsername());
         logger.debug("---------->expectedResult:"+expectedResult);
         logger.debug("---------->actualResult:"+actualResult);
         assertEquals(actualResult,expectedResult);
     }
 
+    @Test
+    public void findByEmailorUsername() throws NotFoundException {
+        User expectedResult = new User();
+        expectedResult.setEmail("chenbo@gmail.com");
+        expectedResult.setFirstName("chen");
+        expectedResult.setLastName("bo");
+        expectedResult.setUsername("cb");
+        expectedResult.setPassword("549831");
+        userService.save(expectedResult);
+        User actualResult_email = userService.findByEmailorUsername(expectedResult.getEmail());
+        User actualResult_username = userService.findByEmailorUsername(expectedResult.getUsername());
+        assertEquals(actualResult_email,expectedResult);
+        assertEquals(actualResult_username,expectedResult);
+    }
 }
