@@ -2,6 +2,7 @@ package com.haoqiang.vpn.repository;
 
 import com.haoqiang.vpn.config.AppConfig;
 import com.haoqiang.vpn.domain.User;
+import com.haoqiang.vpn.extend.security.UserDetailsServiceImpl;
 import com.haoqiang.vpn.service.UserService;
 import javassist.NotFoundException;
 import org.junit.Test;
