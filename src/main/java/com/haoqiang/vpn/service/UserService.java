@@ -1,11 +1,11 @@
 package com.haoqiang.vpn.service;
 
 import com.haoqiang.vpn.domain.User;
+import com.haoqiang.vpn.extend.security.exception.NotFoundException;
 import com.haoqiang.vpn.repository.CRUDDao;
 import com.haoqiang.vpn.repository.CRUDDaoImpl;
 import com.haoqiang.vpn.repository.UserDao;
 import com.haoqiang.vpn.repository.UserDaoImpl;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +22,6 @@ public class UserService {
 
     @Autowired
     private UserDaoImpl userDao;
-
 
     public User save(User user){
         //TODO add logic
@@ -58,7 +57,7 @@ public class UserService {
             user = userDao.findByUsernameIgnoreC(keyword);
         }
         if(user == null){
-            throw new NotFoundException("not found");
+            throw new NotFoundException();
         }
         return user;
     }
