@@ -3,6 +3,7 @@ package com.haoqiang.vpn.repository;
 import com.haoqiang.vpn.config.AppConfig;
 import com.haoqiang.vpn.domain.Region;
 import com.haoqiang.vpn.domain.Server;
+import com.haoqiang.vpn.service.RegionService;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +33,7 @@ import static junit.framework.TestCase.assertNotNull;
 @Transactional
 public class RegionDaoTest {
     @Autowired
-    private RegionDao regionDao;
+    private RegionService regionService;
 
     @Autowired
     private ServerDao serverDao;
@@ -46,10 +47,10 @@ public class RegionDaoTest {
     public void findByIdTest(){
         Region expectedResult = new Region();
         expectedResult.setCountryName("United States");
-        regionDao.save(expectedResult);
+        regionService.save(expectedResult);
         logger.debug("id is: " + expectedResult.getId());
 
-        Region actualResult = regionDao.findById(expectedResult.getId());
+        Region actualResult = regionService.findById(expectedResult.getId());
         logger.debug("actual id is: " + actualResult.getId());
         assertNotNull(expectedResult.getId());
         assertEquals(actualResult, expectedResult);
@@ -60,7 +61,8 @@ public class RegionDaoTest {
     public void findByIdEagerTest(){
         Region expectedResult = new Region();
         expectedResult.setCountryName("China");
-        regionDao.save(expectedResult);
+        regionService.save(expectedResult);
+
 
         Server server = new Server();
         server.setRegion(expectedResult);
@@ -69,7 +71,7 @@ public class RegionDaoTest {
         assertNotNull(server.getId());
         sessionFactory.getCurrentSession().flush();
         sessionFactory.getCurrentSession().refresh(expectedResult);
-        Region actualResult = regionDao.findByIdEager(expectedResult.getId());
+        Region actualResult = regionService.findByIdEager(expectedResult.getId());
         List servers = actualResult.getServers();
         assertEquals(servers.size(), 1);
 

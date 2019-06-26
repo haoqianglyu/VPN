@@ -45,7 +45,8 @@ public class UserController {
     // /api/users Post
     @RequestMapping(value = "", method = RequestMethod.POST)
     public User addUser(@RequestBody User u){
-        return userService.save(u);
+        userService.createUser(u);
+        return u;
     }
 
     // /api/users?username=ares Post
@@ -53,6 +54,5 @@ public class UserController {
     public List<User> getUserByUsername(@RequestParam("username") String username){
         logger.debug("find users by username:"+username);
         return userService.findByUsernameIgnoreCase(username);
-
     }
 }

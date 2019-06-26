@@ -1,6 +1,7 @@
 package com.haoqiang.vpn.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -49,16 +50,19 @@ public class User implements UserDetails {
     private String username;
 
     //default false
+    @JsonIgnore
     @Column(name = "expired")
-    private Boolean expired;
+    private Boolean expired = false;
 
     //default false
+    @JsonIgnore
     @Column(name = "locked")
-    private Boolean locked;
+    private Boolean locked = false;
 
     //default true
+    @JsonIgnore
     @Column(name = "enable")
-    private Boolean enable;
+    private Boolean enable = true;
 
     public void setUsername(String userName) {
         this.username = userName;
@@ -105,21 +109,25 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return !expired;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return !locked;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return enable;
     }

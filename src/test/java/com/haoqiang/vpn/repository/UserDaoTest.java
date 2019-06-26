@@ -3,13 +3,14 @@ package com.haoqiang.vpn.repository;
 import com.haoqiang.vpn.config.AppConfig;
 import com.haoqiang.vpn.domain.User;
 import com.haoqiang.vpn.extend.security.UserDetailsServiceImpl;
+import com.haoqiang.vpn.extend.security.exception.NotFoundException;
 import com.haoqiang.vpn.service.UserService;
-import javassist.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -83,5 +84,15 @@ public class UserDaoTest {
         User actualResult_username = userService.findByEmailorUsername(expectedResult.getUsername());
         assertEquals(actualResult_email,expectedResult);
         assertEquals(actualResult_username,expectedResult);
+    }
+
+    @Test
+    public void createUserTest(){
+        User expectedResult = new User();
+
+        expectedResult.setUsername("cb");
+        expectedResult.setPassword("549831");
+        User u = userService.createUser(expectedResult);
+        //assertEquals(u.getPassword(),"549831");
     }
 }

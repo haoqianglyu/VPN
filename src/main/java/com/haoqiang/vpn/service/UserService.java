@@ -2,11 +2,9 @@ package com.haoqiang.vpn.service;
 
 import com.haoqiang.vpn.domain.User;
 import com.haoqiang.vpn.extend.security.exception.NotFoundException;
-import com.haoqiang.vpn.repository.CRUDDao;
-import com.haoqiang.vpn.repository.CRUDDaoImpl;
-import com.haoqiang.vpn.repository.UserDao;
 import com.haoqiang.vpn.repository.UserDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +16,7 @@ import java.util.List;
  */
 
 @Service
+@Transactional
 public class UserService {
 
     @Autowired
@@ -60,6 +59,16 @@ public class UserService {
             throw new NotFoundException();
         }
         return user;
+    }
+
+    public User createUser(User newUser){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String originalPassword = newUser.getPassword();
+        String encodedPass = encoder.encode(originalPassword);
+        newUser.setPassword(encodedPass);
+        //addAthority(newUser,AuthorityRole.ROLE.....)
+        userDao.save(newUser);
+        return newUser;
     }
 
 

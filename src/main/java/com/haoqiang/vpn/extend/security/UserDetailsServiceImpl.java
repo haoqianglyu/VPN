@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author Haoqiang Lyu
  * @date 2019-06-24 11:43
@@ -31,10 +33,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             domainUser = userService.findByEmailorUsername(emailorUsername);
         } catch (Exception repositoryProblem) {
             logger.debug("catch AuthenticationServiceException from Authentication Provider");
+            throw new UsernameNotFoundException("can't find username in database:"+domainUser.getUsername());
         }
         if(domainUser == null){
             throw new BadCredentialsException("AbstractUserDetailsAuthenticationProvider.UsernameNotFound");
         }
+
         return domainUser;
+
     }
 }

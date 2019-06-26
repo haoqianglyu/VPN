@@ -10,11 +10,11 @@ import java.util.List;
  * @date 2019-06-10 23:01
  */
 public interface RegionDao {
-    Region save(Region region);
+    //Region save(Region region);
 
-    List<Region> findAll();
+    //List<Region> findAll();
 
     Region findByIdEager(Long id);
 
-    Region findById(Long id);
+    //Region findById(Long id);
 }
