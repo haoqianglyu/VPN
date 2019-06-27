@@ -57,7 +57,7 @@ public class RegionDaoTest {
     }
 
     @Test
-    //@Transactional
+    @Transactional
     public void findByIdEagerTest(){
         Region expectedResult = new Region();
         expectedResult.setCountryName("China");
@@ -68,12 +68,17 @@ public class RegionDaoTest {
         server.setRegion(expectedResult);
         serverDao.save(server);
 
-        assertNotNull(server.getId());
+        Server server2 = new Server();
+        server2.setRegion(expectedResult);
+        serverDao.save(server2);
+
         sessionFactory.getCurrentSession().flush();
         sessionFactory.getCurrentSession().refresh(expectedResult);
+
+        assertNotNull(server.getId());
         Region actualResult = regionService.findByIdEager(expectedResult.getId());
-        List servers = actualResult.getServers();
-        assertEquals(servers.size(), 1);
+        List<Server> servers = actualResult.getServers();
+        assertEquals(servers.size(), 2);
 
     }
 

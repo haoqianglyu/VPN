@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -64,6 +65,19 @@ public class User implements UserDetails {
     @Column(name = "enable")
     private Boolean enable = true;
 
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Authority> authorities;
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public Collection< ? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
     public void setUsername(String userName) {
         this.username = userName;
     }
@@ -93,10 +107,7 @@ public class User implements UserDetails {
     }
 
     //role
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
+
 
     @Override
     public String getPassword() {

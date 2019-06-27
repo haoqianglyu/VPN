@@ -1,6 +1,8 @@
 package com.haoqiang.vpn.repository;
 
+import com.haoqiang.vpn.domain.Region;
 import com.haoqiang.vpn.domain.User;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,11 @@ public class UserDaoImpl extends CRUDDaoImpl<User,Long> implements UserDao{
 
     @Override
     public User findByIdEager(Long id) {
-        return null;
+        String hql = "FROM User u LEFT JOIN FETCH u.authorities where u.id = :userId";
+        Session s = sessionFactory.getCurrentSession();
+        TypedQuery<User> query = s.createQuery(hql);
+        query.setParameter("userId", id);
+        return query.getSingleResult();
     }
 
 
@@ -43,7 +49,7 @@ public class UserDaoImpl extends CRUDDaoImpl<User,Long> implements UserDao{
 
     @Override
     public User findByEmailIgnoreCase(String email) {
-        String hql = "FROM User u where lower(u.email) = :email2";
+        String hql = "FROM User u LEFT JOIN FETCH u.authorities where lower(u.email) = :email2";
         Query<User> query = sessionFactory.getCurrentSession().createQuery(hql).setParameter("email2",email.toLowerCase());
         //null
         return query.uniqueResult();
@@ -51,7 +57,7 @@ public class UserDaoImpl extends CRUDDaoImpl<User,Long> implements UserDao{
 
     @Override
     public User findByUsernameIgnoreC(String username) {
-        String hql = "FROM User u where lower(u.username) = :username2";
+        String hql = "FROM User u LEFT JOIN FETCH u.authorities where lower(u.username) = :username2";
         Query<User> query = sessionFactory.getCurrentSession().createQuery(hql).setParameter("username2",username.toLowerCase());
         return query.uniqueResult();
     }

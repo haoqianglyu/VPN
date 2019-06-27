@@ -29,7 +29,7 @@ public class UserController {
 
     // /api/users Get
     @RequestMapping(method = RequestMethod.GET)
-    public List getUserList(){
+    public List<User> getUserList(){
         logger.debug("list users");
         return userService.findAll();
     }

@@ -29,8 +29,32 @@ public class Authority implements GrantedAuthority,Serializable{
     @JoinColumn( name = "user_id")
     private User user;
 
+    @Column(name = "role")
+    private String role;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String getAuthority() {
-        return null;
+        return role;
     }
 }

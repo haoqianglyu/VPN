@@ -1,5 +1,6 @@
 package com.haoqiang.vpn.extend.security;
 
+import com.haoqiang.vpn.domain.Authority;
 import com.haoqiang.vpn.domain.User;
 import com.haoqiang.vpn.service.UserService;
 import org.slf4j.Logger;
@@ -38,6 +39,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(domainUser == null){
             throw new BadCredentialsException("AbstractUserDetailsAuthenticationProvider.UsernameNotFound");
         }
+//        User newuser = userService.findByIdEager(domainUser.getId());
+//        domainUser.setAuthorities((List<Authority>) newuser.getAuthorities());
 
         return domainUser;
 

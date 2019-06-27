@@ -44,7 +44,9 @@ public abstract class CRUDDaoImpl<B,IB> implements CRUDDao<B,IB>{
     public List<B> findAll() {
         String hql = "FROM "+hQLEntityClazz.getName();
         Session s = sessionFactory.getCurrentSession();
+        System.out.println(s);
         TypedQuery<B> query = s.createQuery(hql);
+        System.out.println(query);
         return query.getResultList();
     }
 

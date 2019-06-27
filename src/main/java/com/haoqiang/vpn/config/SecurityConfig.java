@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable().authorizeRequests().antMatchers("/api/users","/api/user").permitAll()
                 .and()
-                    .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTER_USER","ADMIN")
+                    .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTERED_USER","ADMIN")
                 .and()
                 .formLogin();
         //        .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
