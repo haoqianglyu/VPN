@@ -1,12 +1,21 @@
 package com.haoqiang.vpn.api;
 
 import com.haoqiang.vpn.domain.User;
+import com.haoqiang.vpn.extend.security.JwtTokenUtil;
+import com.haoqiang.vpn.extend.security.exception.NotFoundException;
 import com.haoqiang.vpn.repository.UserDao;
 import com.haoqiang.vpn.repository.UserDaoImpl;
 import com.haoqiang.vpn.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.BeanIds;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +35,13 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    @Qualifier(BeanIds.AUTHENTICATION_MANAGER)
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     // /api/users Get
     @RequestMapping(method = RequestMethod.GET)
@@ -55,4 +71,34 @@ public class UserController {
         logger.debug("find users by username:"+username);
         return userService.findByUsernameIgnoreCase(username);
     }
+
+    // /api/users/login Post
+    @RequestMapping(value = "/login", method = RequestMethod.POST,produces = "application/json")
+    public String login(@RequestBody User user){
+
+        String token = null;
+        logger.info("username:"+user.getUsername());
+        logger.info("password:"+user.getPassword());
+        UsernamePasswordAuthenticationToken notfullyAuthentication = new UsernamePasswordAuthenticationToken(
+            user.getUsername(),
+            user.getPassword()
+        );
+
+        try {
+            final Authentication authentication = authenticationManager.authenticate(notfullyAuthentication);
+            //TODO generate token from jwttoken service
+            try {
+                UserDetails ud = userService.findByEmailorUsername(user.getUsername());
+                token = jwtTokenUtil.generateToken(ud);
+                //TODO JSON
+            } catch (NotFoundException e) {
+                e.printStackTrace();
+            }
+        } catch (AuthenticationException e) {
+            logger.debug("authentication fail!");
+        }
+        return token;
+    }
+
+
 }

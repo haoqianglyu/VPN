@@ -1,6 +1,5 @@
 package com.haoqiang.vpn.repository;
 
-import com.haoqiang.vpn.domain.Region;
 import com.haoqiang.vpn.domain.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
