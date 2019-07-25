@@ -4,10 +4,9 @@ import com.haoqiang.vpn.domain.Authority;
 import com.haoqiang.vpn.domain.AuthorityRole;
 import com.haoqiang.vpn.domain.User;
 import com.haoqiang.vpn.extend.security.exception.NotFoundException;
-import com.haoqiang.vpn.repository.AuthorityDao;
 import com.haoqiang.vpn.repository.AuthorityDaoImpl;
 import com.haoqiang.vpn.repository.UserDaoImpl;
-import com.sun.xml.internal.ws.api.policy.AlternativeSelector;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
