@@ -58,6 +58,7 @@ public class UserDaoTest {
         expectedResult.setFirstName("haoqiang");
         expectedResult.setLastName("lyu");
         expectedResult.setUsername("Ares");
+        expectedResult.setPassword("549831");
         userService.save(expectedResult);
         User actualResult = userService.findById(expectedResult.getId());
         assertNotNull(expectedResult.getId());
