@@ -307,7 +307,9 @@
                         <version>${flyway.version}</version>
                         <configuration>
                             <driver>org.postgresql.Driver</driver>
-                            <url>jdbc:postgresql://${db_server}:5430/VPN_unit</url>
+                            <url>jdbc:postgresql://172.17.0.2:5432/VPN_unit</url>
+<!--                            <-!5430-->
+<!--                            vpn_unit-->
                             <user>${db_username}</user>
                             <password>${db_password}</password>
                             <locations>
