@@ -1,0 +1,1 @@
+alter table users add column username varchar(255) not null;
