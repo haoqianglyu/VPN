@@ -147,14 +147,6 @@ Responsebody
 Postman snapshoot for user login
 ![](https://vpnlyu-dev.s3.amazonaws.com/Screen+Shot+2019-09-05+at+20.14.29.png)
 
-### post image to AWS S3
-
-```$xslt
-POST http://localhost:8080/api/image
-```
-Postman snapshoot for uploading a image to S3
-
-![](https://github.com/di1025/NationalResortBooking/blob/master/READMESnapshoot/AWS%20S3.png?raw=true)
 
 ### send message to AWS SQS
 
@@ -163,4 +155,4 @@ POST http://localhost:8080/api/message
 ```
 
 Postman snapshoot for sending messages to SQS
-![](https://github.com/di1025/NationalResortBooking/blob/master/READMESnapshoot/SQS%20consumer.png?raw=true)
+![](https://vpnlyu-dev.s3.amazonaws.com/SQS+consumer.png)
