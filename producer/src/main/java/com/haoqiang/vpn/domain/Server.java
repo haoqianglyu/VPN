@@ -15,7 +15,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Entity
 @Table(name="servers")
 public class Server {
-    @Id
+    @Id //primary key
     @GeneratedValue(strategy = SEQUENCE , generator = "server_id_gen")
     @SequenceGenerator(name = "server_id_gen",sequenceName = "server_id_seq",allocationSize = 1)
     private Long id;

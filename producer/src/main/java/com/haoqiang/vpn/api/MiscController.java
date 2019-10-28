@@ -43,7 +43,7 @@ public class MiscController {
         //5. store s3key into database entity
         //6. new controller to retrieve object url by object id
 
-        File f = new File("/Users/haoqianglyu/Downloads/1234.png");
+        File f = new File("/Users/haoqianglyu/Downloads/screen_shot_2019-08-22_at_13.52.13.png");
         try {
             file.transferTo(f);
             storageService.putObject(file.getOriginalFilename(),f);

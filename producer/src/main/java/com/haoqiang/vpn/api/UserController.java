@@ -59,7 +59,7 @@ public class UserController {
     }
 
     // /api/users Post
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public User addUser(@RequestBody User u){
         userService.createUser(u);
         return u;
