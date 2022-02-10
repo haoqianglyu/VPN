@@ -16,7 +16,7 @@
 
     <properties>
         <spring.version>5.0.6.RELEASE</spring.version>
-        <hibernate.version>5.3.1.Final</hibernate.version>
+        <hibernate.version>5.4.24.Final</hibernate.version>
         <flyway.version>5.2.4</flyway.version>
         <fasterxml-jackson.version>2.9.5</fasterxml-jackson.version>
         <mockito.version>2.19.0</mockito.version>
@@ -266,7 +266,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.4.3.Final</version>
+            <version>5.4.24.Final</version>
         </dependency>
         <dependency>
             <groupId>com.github.v-ladynev</groupId>
